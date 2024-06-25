@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="fonts/font/stylesheet.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="css/index.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700" rel="stylesheet">
+	<script src="js/library/vue.js"></script>
+</head>
+
+<body>
+	<div class="metro">
+		<div @click="exit()" class="exit">
+				<a>X</a>EXIT
+		</div>
+		<div class="mainmetro">
+		<div class="box">
+			<div v-for="i in 11" class="vertikal">
+				<div :style="{ left: i*3.5 + 'vw'}" class="line"></div>
+			</div>
+			<div v-for="i in 11" class="vertikal">
+				<div :style="{ top: i*3.5 + 'vw'}" class="line2"></div>
+			</div>
+			<div v-for="i in 11" class="vertikal">
+				<div :style="{ left: i*3.5 + 'vw'}" class="alfavit">{{geoletter[i]}}</div>
+			</div>
+			<div v-for="i in 11" class="vertikal">
+				<div :style="{ top: i*3.5 + 'vw'}" class="numbers">{{geonumbers[i]}}</div>
+			</div>
+			<div class="names_stations">
+				<div class="name_first">
+					<div class="text">1. LSIA Terminal</div>
+					<div v-if="station == 1" class="youarehere">You are here!</div>
+				</div>
+				<div style="bottom: 11.25vw; left: 13.5vw;" class="name_first">
+					<div class="text2">2. LSIA Parking</div>
+					<div v-if="station == 2" class="youarehere">You are here!</div>
+				</div>
+				<div style="bottom: 20.4vw; left: 9vw;" class="name_first">
+					<div class="text2">3. Puerto Del Sol</div>
+					<div v-if="station == 3" class="youarehere">You are here!</div>
+				</div>
+				<div style="bottom: 20.4vw; left: 23.5vw;" class="name_first">
+					<div class="text2">4. Strawberry</div>
+					<div v-if="station == 4" class="youarehere">You are here!</div>
+				</div>
+				<div style="top: 4.5vw; left: 24vw;" class="name_first">
+					<div class="text2">5. Pillbox North</div>
+					<div class="youarehere">Closed</div>
+				</div>
+				<div style="top: 2vw; left: 17.5vw;" class="name_first">
+					<div class="text2">6. Burton</div>
+					<div v-if="station == 6" class="youarehere">You are here!</div>
+				</div>
+				<div style="top: 2.5vw; left: 9.5vw;" class="name_first">
+					<div class="text2">7. Portola Drive</div>
+					<div v-if="station == 7" class="youarehere">You are here!</div>
+				</div>
+				<div style="top: 7.5vw; left: 4vw;" class="name_first">
+					<div class="text2">8. Del Perro</div>
+					<div v-if="station == 8" class="youarehere">You are here!</div>
+				</div>
+				<div style="top: 11.5vw; left: 14vw;" class="name_first">
+					<div class="text2">9. Little Seoul</div>
+					<div v-if="station == 9" class="youarehere">You are here!</div>
+				</div>
+				<div style="top: 13.75vw; left: 22.5vw;" class="name_first">
+					<div class="text2">10. Pillbox South</div>
+					<div v-if="station == 10" class="youarehere">You are here!</div>
+				</div>
+				<div style="bottom: 14.4vw; left: 25.5vw;" class="name_first">
+					<div class="text2">11. Davis</div>
+					<div v-if="station == 11" class="youarehere">You are here!</div>
+				</div>
+			</div>
+			<img src="img/metromap.png" class="map">
+		</div>
+		<div class="ticketsblock">
+			<div class="nt">Station selection</div>
+			<div class="list">
+				<div v-if="station == 1" style="opacity: 0.4" class="item">
+					<div class="name">1. LSIA Terminal</div>
+					<div class="price">Price: <a><a>${{pricemetro}}</a></a></div>
+				</div>
+				<div v-else @click="btn(1)" v-bind:class="{ active: btns[1] }"  id="item" class="item">
+					<div class="name">1. LSIA Terminal</div>
+					<div class="price">Price: <a><a>${{pricemetro}}</a></a></div>
+				</div>
+				<div v-if="station == 2" style="opacity: 0.4" class="item">
+					<div class="name">2. LSIA Parking</div>
+					<div class="price">Price: <a>${{pricemetro}}</a></div>
+				</div>
+				<div v-else @click="btn(2)" v-bind:class="{ active: btns[2] }" id="item" class="item">
+					<div class="name">2. LSIA Parking</div>
+					<div class="price">Price: <a>${{pricemetro}}</a></div>
+				</div>
+				<div v-if="station == 3" style="opacity: 0.4" class="item">
+					<div class="name">3. Puerto Del Sol</div>
+					<div class="price">Price: <a>${{pricemetro}}</a></div>
+				</div>
+				<div v-else @click="btn(3)" v-bind:class="{ active: btns[3] }" id="item" class="item">
+					<div class="name">3. Puerto Del Sol</div>
+					<div class="price">Price: <a>${{pricemetro}}</a></div>
+				</div>
+				<div v-if="station == 4" style="opacity: 0.4" class="item">
+					<div class="name">4. Strawberry</div>
+					<div class="price">Price: <a>${{pricemetro}}</a></div>
+				</div>
+				<div v-else @click="btn(4)" v-bind:class="{ active: btns[4] }" id="item" class="item">
+					<div class="name">4. Strawberry</div>
+					<div class="price">Price: <a>${{pricemetro}}</a></div>
+				</div>
+				<div v-if="station == 6" style="opacity: 0.4" class="item">
+					<div class="name">6. Burton</div>
+					<div class="price">Price: <a>${{pricemetro}}</a></div>
+				</div>
+				<div v-else @click="btn(6)" v-bind:class="{ active: btns[6] }" id="item" class="item">
+					<div class="name">6. Burton</div>
+					<div class="price">Price: <a>${{pricemetro}}</a></div>
+				</div>
+				<div v-if="station == 7" style="opacity: 0.4" class="item">
+					<div class="name">7. Portola Drive</div>
+					<div class="price">Price: <a>${{pricemetro}}</a></div>
+				</div>
+				<div v-else @click="btn(7)" v-bind:class="{ active: btns[7] }" id="item" class="item">
+					<div class="name">7. Portola Drive</div>
+					<div class="price">Price: <a>${{pricemetro}}</a></div>
+				</div>
+				<div v-if="station == 8" style="opacity: 0.4" class="item">
+					<div class="name">8. Del Perro</div>
+					<div class="price">Price: <a>${{pricemetro}}</a></div>
+				</div>
+				<div v-else @click="btn(8)" v-bind:class="{ active: btns[8] }" id="item" class="item">
+					<div class="name">8. Del Perro</div>
+					<div class="price">Price: <a>${{pricemetro}}</a></div>
+				</div>
+				<div v-if="station == 9" style="opacity: 0.4" class="item">
+					<div class="name">9. Little Seoul</div>
+					<div class="price">Price: <a>${{pricemetro}}</a></div>
+				</div>
+				<div v-else @click="btn(9)" v-bind:class="{ active: btns[9] }" id="item" class="item">
+					<div class="name">9. Little Seoul</div>
+					<div class="price">Price: <a>${{pricemetro}}</a></div>
+				</div>
+				<div v-if="station == 10" style="opacity: 0.4" class="item">
+					<div class="name">10. Pillbox South</div>
+					<div class="price">Price: <a>${{pricemetro}}</a></div>
+				</div>
+				<div v-else @click="btn(10)" v-bind:class="{ active: btns[10] }" id="item" class="item">
+					<div class="name">10. Pillbox South</div>
+					<div class="price">Price: <a>${{pricemetro}}</a></div>
+				</div>
+				<div v-if="station == 11" style="opacity: 0.4" class="item">
+					<div class="name">11. Davis</div>
+					<div class="price">Price: <a>${{pricemetro}}</a></div>
+				</div>
+				<div v-else @click="btn(11)" v-bind:class="{ active: btns[11] }" id="item" class="item">
+					<div class="name">11. Davis</div>
+					<div class="price">Price: <a>${{pricemetro}}</a></div>
+				</div>
+			</div>
+			<div class="buyticket">
+				<div class="headline">Ticket purchase</div>
+				<div class="blockst">
+					<div class="desc">Station</div>
+					<div class="namedesc">{{statinons[indexs]}}</div>
+				</div>
+				<div style="top: 12vh;" class="blockst">
+					<div class="desc">Payment</div>
+					<div style="color: #4ac5c890;" v-if="indexs == 0" class="namedesc">$0</div>
+					<div style="color: #4ac5c890;" v-else class="namedesc">${{pricemetro}}</div>
+				</div>
+				<div @click="buy()" class="buybtn">Buy a ticket</div>
+			</div>
+		</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="https://cfx-nui-my-resource/production.js" async></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+    <script src="js/index.js"></script>
+	<script src="js/library/jquery-3.2.1.min.js"></script>
+</body>
+</html>
